@@ -1,5 +1,5 @@
 package market_service
 
-func main()  {
+func main() {
 
 }
