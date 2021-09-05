@@ -1,3 +1,3 @@
-module genesis_se/bitmarket
+module bitmarket
 
 go 1.16

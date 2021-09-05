@@ -2,7 +2,7 @@ package binance
 
 import (
 	"fmt"
-	"genesis_se/bitmarket/pkg/generalApiReader"
+	"bitmarket/pkg/generalApiReader"
 	"net/http"
 	"net/url"
 	"strconv"

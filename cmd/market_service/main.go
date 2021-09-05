@@ -1,8 +1,8 @@
-package market_service
+package main
 
 import (
-	"genesis_se/bitmarket/pkg/binance"
-	"genesis_se/bitmarket/pkg/lightServer"
+	"bitmarket/pkg/binance"
+	"bitmarket/pkg/lightServer"
 )
 
 const DefaultPort string = "16101"

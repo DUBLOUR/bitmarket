@@ -1,6 +1,6 @@
 package lightServer
 
-import "genesis_se/bitmarket/pkg/binance"
+import "bitmarket/pkg/binance"
 
 type IMarket interface {
 	CurrentRate(string) (IMoney, error)
