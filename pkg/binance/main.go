@@ -1,8 +1,9 @@
 package binance
 
 import (
-	"fmt"
 	"bitmarket/pkg/generalApiReader"
+	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -37,7 +38,8 @@ func (b Binance) createRequest(currency string) (*http.Request, error) {
 	return r, nil
 }
 
-func (b Binance) CurrentRate(currency string) (float64, error){
+func (b Binance) CurrentRate(currency string) (float64, error) {
+	log.Println("Binance:", currency)
 	req, err := b.createRequest(currency)
 	if err != nil {
 		return 0.0, err
@@ -59,4 +61,3 @@ func (b Binance) CurrentRate(currency string) (float64, error){
 
 	return price, nil
 }
-
