@@ -1,17 +1,14 @@
 package ratemodel
 
-type RateModel struct {
+type MicroMarketConnector struct {
 	DefaultCoin   string
 	DefaultMarket string
-	market        MarketAdapter
 }
 
-func (r RateModel) Current() (interface{}, error) {
-	return r.market.Request(r.DefaultCoin, r.DefaultMarket)
+func (m MicroMarketConnector) CurrentRate() (interface{}, error) {
+	return get(m.DefaultCoin, m.DefaultMarket)
 }
 
-type MarketAdapter struct{}
-
-func (MarketAdapter) Request(coin, market string) (interface{}, error) {
+func get(coin, market string) (interface{}, error) {
 	return 0.0, nil
 }

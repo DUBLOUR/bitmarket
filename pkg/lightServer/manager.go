@@ -7,7 +7,6 @@ import (
 
 type MarketManager struct {
 	markets       map[string]IMarket
-	kek 		  map[int]int
 	defaultMarket string
 }
 

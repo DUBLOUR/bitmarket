@@ -1,24 +1,18 @@
 package server
 
-type Server struct {
-	Log       ILog
-	Model     IModel
-	Presenter IPresenter
-	Auth      IAuth
-	port      string
-}
-
-func (*Server) Run() {
-
-}
+import (
+	"bitmarket/internal/userModel"
+	"net/http"
+)
 
 type ILog interface {
+	Debug(...interface{})
 	Info(...interface{})
 	Warn(...interface{})
 }
 
 type IPresenter interface {
-	Format(interface{}) string
+	Format(interface{}) (string, error)
 }
 
 type IModel interface {
@@ -26,16 +20,26 @@ type IModel interface {
 }
 
 type IAuth interface {
-	Register(TmpUser) error
-	Login(TmpUser) (IToken, error)
-	LoginByToken(IToken) error
+	Register(userModel.ICredentials) error
+	Login(userModel.ICredentials) (userModel.IToken, error)
+	LoginByToken(userModel.IToken) error
 }
 
-type TmpUser struct {
-	Email string
-	Pass  string
+type Server struct {
+	Model     IModel
+	Auth      IAuth
+	Presenter IPresenter
+	Log       ILog
+	Port      string
 }
 
-type IToken interface {
-	Str() string
+func (s *Server) Run() {
+	h := Handlers(s.Auth, s.Presenter, s.Model, s.Log)
+	server := &http.Server{
+		Addr:    s.Port,
+		Handler: h,
+	}
+
+	s.Log.Warn(server.ListenAndServe())
+
 }

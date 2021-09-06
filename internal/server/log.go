@@ -1,17 +1,38 @@
 package server
 
+import (
+	"fmt"
+	"log"
+	"os"
+)
+
 type FileLogger struct {
 	filename string
 }
 
-func (fl FileLogger) Print(...interface{}) {
-	return
+func NewFileLogger(filename string) *FileLogger {
+	return &FileLogger{filename}
 }
 
-func (fl FileLogger) Info(...interface{}) {
-	return
+func (l FileLogger) Print(v ...interface{}) {
+	f, err := os.OpenFile(l.filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer f.Close()
+	if _, err := f.WriteString(fmt.Sprint(v...)); err != nil {
+		log.Println(err)
+	}
 }
 
-func (fl FileLogger) Warn(...interface{}) {
-	return
+func (l FileLogger) Debug(v ...interface{}) {
+	l.Print("(--) ", fmt.Sprintln(v...))
+}
+
+func (l FileLogger) Info(v ...interface{}) {
+	l.Print("(II) ", fmt.Sprintln(v...))
+}
+
+func (l FileLogger) Warn(v ...interface{}) {
+	l.Print("(WW) ", fmt.Sprintln(v...))
 }
